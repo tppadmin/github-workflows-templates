@@ -50,29 +50,4 @@ The templates include explicit safeguards around untrusted inputs (see prompts a
 .github/workflows/gemini-scheduled-triage.yml
 
 Example caller workflow:
-name: Example — Call Gemini Triage
 
-on:
-  workflow_dispatch:
-    inputs:
-      issue_number:
-        description: 'Issue number to triage (leave blank to let workflow pick recent issues)'
-        required: false
-        default: ''
-
-permissions:
-  contents: read
-  issues: write
-
-jobs:
-  call-gemini-triage:
-    # Replace OWNER/REPO and ref (e.g., main or a tag) with your templates repo
-    uses: 'OWNER/REPO/.github/workflows/gemini-triage.yml@main'
-    with:
-      # Map inputs expected by the reusable gemini-triage workflow
-      issue_number: ${{ github.event.inputs.issue_number }}
-      labels: 'triage'
-    secrets:
-      # Pass required secrets from the calling repository
-      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
